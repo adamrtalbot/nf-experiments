@@ -7,7 +7,7 @@ process MARKDUP_L {
 
     input:
         tuple val(meta), path("in.cram")
-        path ref_path
+        path ref
 
     output:
         tuple val(meta), path("${meta.name}.cram"), path("${meta.name}.cram.crai"), emit: cram
@@ -21,9 +21,9 @@ process MARKDUP_L {
         set pipefail -o
         touch ${task.process}_${meta.name}.quilt
 
-        samtools view -T ${ref_path}/genome.fa -@ $task.cpus --no-PG -h in.cram > in.sam
+        samtools view -T ${ref} -@ $task.cpus --no-PG -h in.cram > in.sam
         cat in.sam | bamsormadup inputformat=sam level=0 SO=coordinate blocksortverbose=0 rcsupport=1 threads=$task.cpus fragmergepar=$task.cpus optminpixeldif=2500 M=${meta.name}.dup.txt > ${meta.name}.sam
-        samtools view -T ${ref_path}/genome.fa --no-PG -@ $task.cpus -C -o ${meta.name}.cram ${meta.name}.sam
+        samtools view -T ${ref} --no-PG -@ $task.cpus -C -o ${meta.name}.cram ${meta.name}.sam
 
         samtools quickcheck ${meta.name}.cram
         samtools index -@ $task.cpus ${meta.name}.cram
@@ -56,7 +56,7 @@ process MARKDUP_L {
 }
 
 workflow {
-    genome_ch  = Channel.fromPath(params.genome, type: 'dir', checkIfExists: true)
+    genome_ch  = Channel.fromPath(params.genome, type: 'file', checkIfExists: true)
     cram_ch    = Channel.fromPath(params.cram, type: 'file', checkIfExists: true)
                   .map { cram -> tuple( ["name": "test"], cram ) }
     MARKDUP_L(cram_ch, genome_ch)
