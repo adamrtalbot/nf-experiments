@@ -2,7 +2,7 @@ process HELLO {
     container "docker.io/debian:stable-slim"
 
     script:
-    "myscript.sh"
+    "echo Hello world!"
 }
 
 workflow {
