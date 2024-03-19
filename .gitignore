@@ -1,3 +1,4 @@
 .env
 .nextflow*
 work
+.nf-test*
