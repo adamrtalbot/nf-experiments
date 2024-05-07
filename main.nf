@@ -17,6 +17,5 @@ process SLEEPY {
 
 workflow {
   time = Channel.fromList(params.time.tokenize(','))
-  time.view()
   SLEEPY(time)
 }
