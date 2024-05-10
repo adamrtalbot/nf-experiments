@@ -3,8 +3,8 @@ process FREEBAYES_PARALLEL {
 
     stageInMode 'copy'
 
-    cpus 1
-    memory '12 GB'
+    cpus 32
+    memory '128GB'
 
     input:
         tuple val(id), path(bam), path(bai)
