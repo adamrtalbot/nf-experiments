@@ -1,3 +1,6 @@
+include { validateParameters; paramsHelp; paramsSummaryLog } from 'plugin/nf-schema'
+
 workflow {
-    exit 1
+    // Validate input parameters
+    validateParameters()
 }
