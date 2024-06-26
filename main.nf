@@ -1,3 +1,3 @@
 workflow {
-    error "it's gone wrong :("
+    throw new Exception("It's gone wrong")
 }
