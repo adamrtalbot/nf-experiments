@@ -1,4 +1,4 @@
-include { validateParameters; paramsHelp; paramsSummaryLog } from 'plugin/nf-schema'
+include { validateParameters } from 'plugin/nf-validation'
 
 workflow {
     // Validate input parameters
