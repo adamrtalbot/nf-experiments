@@ -1,22 +1,22 @@
 process PROCESS {
     debug true
 
-    container "${input.container}"
-    conda "${params.conda}"
+    container "${meta.container}"
+    conda "${meta.conda}"
 
-    publishDir "${input.output}", pattern: "*", mode: "copy"
+    publishDir "${meta.output}", pattern: "*", mode: "copy"
 
     input:
-        val input
+        tuple path(inputs), val(meta)
     
     output:
-        path "**"                 , emit: allFiles, optional: true
-        path "${input.outputGlob}", emit: output  , optional: true
+        path "**"                , emit: allFiles, optional: true
+        path "${meta.outputGlob}", emit: output  , optional: true
         stdout
 
     script:
     """
-    ${input.script}
+    ${meta.script}
     """
 }
 
@@ -28,11 +28,13 @@ workflow {
                         []
 
     input = Channel.of([
-        "input": fileObjects,
-        "output": params.output,
-        "outputGlob": params.outputPattern,
-        "container": params.container,
-        "script": params.script,
+        fileObjects, 
+        [
+            output: params.output,
+            outputGlob: params.outputPattern,
+            container: params.container,
+            script: params.script,
+        ]
     ])
 
     PROCESS(input)
