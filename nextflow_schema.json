@@ -1,0 +1,57 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema",
+  "$id": "https://raw.githubusercontent.com//master/nextflow_schema.json",
+  "title": " pipeline parameters",
+  "description": "",
+  "type": "object",
+  "definitions": {
+    "input_output_options": {
+      "title": "Input/output options",
+      "type": "object",
+      "fa_icon": "fas fa-terminal",
+      "description": "Define where the pipeline should find input data and save output data.",
+      "required": ["input"],
+      "properties": {
+        "input": {
+          "type": "string",
+          "fa_icon": "fas fa-file-import",
+          "description": "Comma separated list of files that will be staged into the input directory."
+        },
+        "script": {
+          "type": "string",
+          "default": "echo \"Hello, world!\" > hello.txt",
+          "description": "Bash command line to be executed in process.",
+          "fa_icon": "fas fa-terminal"
+        },
+        "outputPattern": {
+          "type": "string",
+          "default": "*",
+          "description": "Pattern of output files to be captured as outputs and published.",
+          "fa_icon": "fas fa-file-export"
+        },
+        "output": {
+          "type": "string",
+          "default": "results",
+          "description": "Path where output files should be published to.",
+          "fa_icon": "fas fa-folder-open"
+        },
+        "container": {
+          "type": "string",
+          "default": "ubuntu:latest",
+          "description": "Docker container to use for running the process.",
+          "fa_icon": "fas fa-box"
+        },
+        "conda": {
+          "type": "string",
+          "description": "List of Conda packages to used in the process (ignored when Docker is used).",
+          "fa_icon": "fas fa-box-open"
+        }
+      }
+    }
+  },
+  "allOf": [
+    {
+      "$ref": "#/definitions/input_output_options"
+    }
+  ]
+}
