@@ -27,5 +27,11 @@
     {
       "$ref": "#/definitions/input_output_options"
     }
-  ]
+  ],
+  "properties": {
+    "sleep": {
+      "type": "integer",
+      "default": 12
+    }
+  }
 }
