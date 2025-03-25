@@ -1,6 +1,7 @@
 workflow {  
     def secret = getSecret("rob-test-secret")
     log.info "Secret: $secret"
+    SLEEP()
 }
 
 def getSecret(String secretName, String region = 'eu-west-2') {
@@ -19,4 +20,11 @@ def getSecret(String secretName, String region = 'eu-west-2') {
         log.info "Failed to retrieve secret: ${e.message}"
         return null
     }
+}
+
+process SLEEP {
+    script:
+    """
+    sleep 300
+    """
 }
