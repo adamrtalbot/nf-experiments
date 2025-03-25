@@ -1,7 +1,11 @@
-workflow {  
-    def secret = getSecret("rob-test-secret")
-    log.info "Secret: $secret"
+workflow {
+    String towerId = System.getenv("TOWER_WORKFLOW_ID")
+    String towerRef = towerId ? "tower-${towerId}/" : ""
+    String secretId = "${towerRef}${params.secretName}"
+    log.debug("Fetching secret from ${secretId}")
     SLEEP()
+    def secret = getSecret(secretId)
+    log.info "Secret: $secret"
 }
 
 def getSecret(String secretName, String region = 'eu-west-2') {
